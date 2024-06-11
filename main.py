@@ -1,5 +1,6 @@
 import pyglet
 from pyglet.window import key
+from typing import Any
 
 
 def centre_animation(animation):
@@ -37,7 +38,7 @@ def on_draw():
 
 
 @window.event
-def on_key_press(symbol, modifiers):
+def on_key_press(symbol: Any, modifiers) -> None:
     global enter_pressed
     if symbol == key.LEFT:
         man.x -= 10
@@ -53,7 +54,7 @@ def on_key_press(symbol, modifiers):
 
 
 @window.event
-def on_key_release(symbol, modifiers):
+def on_key_release(symbol: Any, modifiers) -> None:
     global enter_pressed
     if symbol == key.ENTER:
         enter_pressed = False
