@@ -3,6 +3,7 @@ from pyglet.window import key
 from typing import Any
 from HUD import HUD
 
+
 def centre_animation(animation):
     for frame in animation.frames:
         frame.image.anchor_x = frame.image.width // 2
