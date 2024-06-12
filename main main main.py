@@ -1,38 +1,15 @@
 import threading
 import queue
+from game_main import create_window
+from scrollsOfDestiny import main
 
-import game_main
-import scrollsOfDestiny
-
-
-def game_loop(input_queue):
-    game_main.main(input_queue)
-
-
-def sensor_loop(output_queue):
-    scrollsOfDestiny.main(output_queue)
-
-
-
-def main():
-    ...
-
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     # create a data transmission line between two threads
     data_queue = queue.Queue()
 
-    # create two threads to run recognition and game simultaneously
-    # this is done so that the chord recognition can record for several
-    # seconds without interrupting the game
-    game_thread = threading.Thread(target=game_loop, args=(data_queue,))
-    ai_thread   = threading.Thread(target=sensor_loop, args=(data_queue,))
+    # create the input thread
+    thread = threading.Thread(target=main, args=(data_queue,))
+    thread.start()
 
-    # start the two threads
-    game_thread.start()
-    ai_thread.start()
-
-    # wait for both threads to stop before ending the program
-    game_thread.join()
-    ai_thread.join()
+    # create and run the pyglet window on the main thread
+    create_window(data_queue)

@@ -1,14 +1,14 @@
 import pyglet
 from pyglet.window import key
-from typing import Any
 from HUD import HUD
+from typing import Any
 
-def main(input_queue):
-    def centre_animation(animation):
-        for frame in animation.frames:
-            frame.image.anchor_x = frame.image.width // 2
-            frame.image.anchor_y = frame.image.height // 2
+def centre_animation(animation):
+    for frame in animation.frames:
+        frame.image.anchor_x = frame.image.width // 2
+        frame.image.anchor_y = frame.image.height // 2
 
+def create_window(input_queue: Any = None):
     window = pyglet.window.Window(500, 500)
 
     # make the hud
@@ -32,18 +32,24 @@ def main(input_queue):
     # Variable to track whether the Enter key is pressed
     enter_pressed = False
 
-
     @window.event
     def on_draw():
-        window.clear()
+        # window.clear()
         bot.draw()
         top.draw()
         hud.draw()
 
+    def update(dt):
+        nonlocal enter_pressed
+        hit = False
+        if input_queue and not input_queue.empty():
+            hit = input_queue.get()
+        if hit:
+            man.scale *= 1.01
 
     @window.event
     def on_key_press(symbol: Any, modifiers) -> None:
-        global enter_pressed
+        nonlocal enter_pressed
         if symbol == key.LEFT:
             man.x -= 10
         elif symbol == key.RIGHT:
@@ -62,9 +68,15 @@ def main(input_queue):
 
     @window.event
     def on_key_release(symbol: Any, modifiers) -> None:
-        global enter_pressed
+        nonlocal enter_pressed
         if symbol == key.ENTER:
             enter_pressed = False
             man.scale /= 1.5  # Decrease scale when Enter is released
 
+    # Schedule the update function
+    pyglet.clock.schedule_interval(update, 1/60.0)  # Update at 60Hz
+
     pyglet.app.run()
+
+if __name__ == '__main__':
+    create_window()

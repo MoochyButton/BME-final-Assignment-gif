@@ -101,7 +101,7 @@ def calibrate_threshold():
         return np.mean(mean_values) + 0.5
     return None
 
-def main(output_queue):
+def main(input_queue = None):
     """
     Main function to initialize the sensor manager, set up the plot, and start the animation.
     """
@@ -132,7 +132,8 @@ def main(output_queue):
         if threshold is not None:
             if vertical_acceleration[peaks][-1] > threshold and potential:
                 potential = False
-                output_queue.put(True)
+                if input_queue:
+                    input_queue.put(True)
                 print(count := count + 1)
                 print(threshold)
                 print(vertical_acceleration[peaks])
