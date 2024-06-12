@@ -101,7 +101,7 @@ def calibrate_threshold():
         return np.mean(mean_values) + 0.5
     return None
 
-def main():
+def main(output_queue):
     """
     Main function to initialize the sensor manager, set up the plot, and start the animation.
     """
@@ -132,11 +132,11 @@ def main():
         if threshold is not None:
             if vertical_acceleration[peaks][-1] > threshold and potential:
                 potential = False
+                output_queue.put(True)
                 print(count := count + 1)
                 print(threshold)
                 print(vertical_acceleration[peaks])
                 print(f"Above Threshold")
-                osc_client.send_message("/threshold_exceeded", 1)  # Sending OSC message
 
         prev_len = vertical_acceleration[peaks].size
 
