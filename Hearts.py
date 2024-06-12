@@ -1,27 +1,25 @@
-from copy import deepcopy
 from typing import Tuple
-import pyglet as pg
-from pyglet import shapes
 from heart import Heart
-import pyglet
+import pyglet as pg
 from pyglet.window import key
 from typing import Any
+
 
 class HUD:
 
     vector2D = Tuple[int, int]
     squareCoordinates = Tuple[int, int, int, int] # top left, top right, bottom left, bottom right
 
-    def __init__(self, max_value: int = 5, position: vector2D = (200, 200)):
+    def __init__(self, size: int = 5, max_value: int = 5, position: vector2D = (200, 200)):
         self.position = position
         self.max_value = max_value
+        self.size = size
         self.hearts = []
-        self.hearts = [Heart((x * 80, 0)) for x in range(max_value)]  # Initialize with max_value Heart objects
+        self.hearts = [Heart(self.size, ((x * 100) + self.position[0], self.position[1])) for x in range(max_value)]  # Initialize with max_value Heart objects
 
     def draw(self):
         for heart in self.hearts:
             heart.draw()
-
 
     def update(self, position: vector2D):
         """
@@ -43,20 +41,26 @@ class HUD:
         self.position = position
         return self.position
 
-    def update_value(self, damage: int = 10) -> int:
+    def take_damage(self) -> int:
         """
         updates the hud based on whatever damage we take,
         or what stamina we're at
         """
-        self.current_value -= damage
-        return self.current_value
+        self.hearts.pop()
+        return len(self.hearts)
 
     def reset(self):
-        self.current_value = deepcopy(self.max_value)
+        """
+        resets the heart counter to max_hearts
+        :return:
+        """
+        self.hearts = []
+        self.hearts = [Heart(self.size, ((x * 100) + self.position[0], self.position[1])) for x in range(self.max_value)]
+
 
 def main():
-    window = pyglet.window.Window(500, 500)
-    heart = HUD(2)
+    window = pg.window.Window(500, 500)
+    heart = HUD(2, 5, (50, 400))
 
     @window.event
     def on_draw():
@@ -67,15 +71,16 @@ def main():
     def on_key_press(symbol: Any, modifiers: Any) -> None:
         global enter_pressed
         if symbol == key.LEFT:
-            heart.update((-10, 0))
+            heart.take_damage()
         if symbol == key.RIGHT:
-            heart.update((10, 0))
+            heart.reset()
         if symbol == key.UP:
             heart.update((0, 10))
         if symbol == key.DOWN:
             heart.update((0, -10))
 
-    pyglet.app.run()
+    pg.app.run()
+
 
 if __name__ == "__main__":
     main()

@@ -8,11 +8,13 @@ class Heart:
 
     Vector2D = Tuple[int, int]
 
-    def __init__(self, position: Vector2D = (0, 0)):
+    def __init__(self, size, position: Vector2D = (0, 0)):
         self.position = position
-        self.ear1 = shapes.Circle(self.position[0] + 52.8, self.position[1] + 17.6, 25, 10)
-        self.ear2 = shapes.Circle(self.position[0] + 17.6, self.position[1] + 17.6, 25, 10)
-        self.body = shapes.Rectangle(self.position[0], self.position[1], 50, 50)
+        self.radius = 5
+        self.side = 10
+        self.ear1 = shapes.Circle(self.position[0] + ( )/2, self.position[1] + 17.6, self.radius * size, 10)
+        self.ear2 = shapes.Circle(self.position[0] + 17.6, self.position[1] + 17.6, self.radius * size, 10)
+        self.body = shapes.Rectangle(self.position[0], self.position[1], self.side * size, self.side * size)
         self.body.rotation = 45
 
     def draw(self):
