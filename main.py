@@ -1,7 +1,7 @@
 import pyglet
 from pyglet.window import key
 from typing import Any
-
+from Hearts import HUD
 
 def centre_animation(animation):
     for frame in animation.frames:
@@ -10,6 +10,9 @@ def centre_animation(animation):
 
 
 window = pyglet.window.Window(500, 500)
+
+# make the hud
+hud = HUD(position=(25, 450))
 
 top = pyglet.graphics.Batch()
 bot = pyglet.graphics.Batch()
@@ -35,6 +38,7 @@ def on_draw():
     window.clear()
     bot.draw()
     top.draw()
+    hud.draw()
 
 
 @window.event

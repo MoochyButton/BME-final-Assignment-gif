@@ -15,7 +15,7 @@ class HUD:
         self.max_value = max_value
         self.size = size
         self.hearts = []
-        self.hearts = [Heart(self.size, ((x * 100) + self.position[0], self.position[1])) for x in range(max_value)]  # Initialize with max_value Heart objects
+        self.hearts = [Heart(self.size, ((x * 6 * self.size) + self.position[0], self.position[1])) for x in range(max_value)]  # Initialize with max_value Heart objects
 
     def draw(self):
         for heart in self.hearts:
@@ -27,6 +27,7 @@ class HUD:
         :param position:
         :return:
         """
+        self.position += position
         for heart in self.hearts:
             heart.update(position)
         return self.position
@@ -38,7 +39,7 @@ class HUD:
         :return:
         """
 
-        self.position = position
+        self.position += position
         return self.position
 
     def take_damage(self) -> int:
@@ -54,13 +55,15 @@ class HUD:
         resets the heart counter to max_hearts
         :return:
         """
-        self.hearts = []
-        self.hearts = [Heart(self.size, ((x * 100) + self.position[0], self.position[1])) for x in range(self.max_value)]
+
+        for heart in self.hearts:
+            self.hearts.pop()
+        self.hearts = [Heart(self.size, ((x * 6 * self.size) + self.position[0], self.position[1])) for x in range(self.max_value)]  # Initialize with max_value Heart objects
 
 
 def main():
     window = pg.window.Window(500, 500)
-    heart = HUD(2, 5, (50, 400))
+    heart = HUD(10, 5, (50, 400))
 
     @window.event
     def on_draw():
@@ -75,9 +78,9 @@ def main():
         if symbol == key.RIGHT:
             heart.reset()
         if symbol == key.UP:
-            heart.update((0, 10))
+            heart.update((10, 0))
         if symbol == key.DOWN:
-            heart.update((0, -10))
+            heart.update((-10, 0))
 
     pg.app.run()
 

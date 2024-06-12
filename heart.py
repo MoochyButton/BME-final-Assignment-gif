@@ -4,33 +4,24 @@ from pyglet.window import key
 from typing import Tuple, Any
 import math
 
-
 class Heart:
 
     Vector2D = Tuple[int, int]
 
     def __init__(self, size, position: Vector2D = (0, 0)):
         self.position = position
-        self.radius = 5
-        self.side = 10
-        thingy = (math.sqrt(self.side + self.side))
-        self.ear1 = shapes.Circle(self.position[0] + thingy*3, self.position[1] + thingy/2, self.radius * size, 10)
-        self.ear2 = shapes.Circle(self.position[0] + thingy/2, self.position[1] + thingy/2, self.radius * size, 10)
-        self.body = shapes.Rectangle(self.position[0], self.position[1], self.side * size, self.side * size)
-        self.body.rotation = 45
+        self.size = size
+        self.sprite = pyglet.image.load_animation('heart.gif')
+        self.sprite = pyglet.sprite.Sprite(self.sprite, self.position[0], self.position[1])
+        self.sprite.scale = 0.01 * self.size
 
     def draw(self):
-        self.body.draw()
-        self.ear1.draw()
-        self.ear2.draw()
+        self.sprite.draw()
 
     def update(self, position: Vector2D):
-        self.body.x += position[0]
-        self.ear1.x += position[0]
-        self.ear2.x += position[0]
-        self.body.y += position[1]
-        self.ear1.y += position[1]
-        self.ear2.y += position[1]
+        self.position += position
+        self.sprite.x += position[1]
+        self.sprite.y += position[0]
 
 
 def main():
