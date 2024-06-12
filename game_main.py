@@ -3,10 +3,12 @@ from pyglet.window import key
 from HUD import HUD
 from typing import Any
 
+
 def centre_animation(animation):
     for frame in animation.frames:
         frame.image.anchor_x = frame.image.width // 2
         frame.image.anchor_y = frame.image.height // 2
+
 
 def create_window(input_queue: Any = None):
     window = pyglet.window.Window(500, 500)
@@ -17,7 +19,7 @@ def create_window(input_queue: Any = None):
     top = pyglet.graphics.Batch()
     bot = pyglet.graphics.Batch()
 
-    running_man = pyglet.image.load_animation('running_man.gif')
+    running_man = pyglet.image.load_animation('DudeRunning.gif')
     rotating_ball = pyglet.image.load_animation('rotating_ball.gif')
 
     centre_animation(running_man)
@@ -34,7 +36,7 @@ def create_window(input_queue: Any = None):
 
     @window.event
     def on_draw():
-        # window.clear()
+        window.clear()
         bot.draw()
         top.draw()
         hud.draw()

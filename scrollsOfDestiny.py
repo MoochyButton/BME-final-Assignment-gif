@@ -32,9 +32,9 @@ def initialize_sensor_manager(sensor_names, sample_rate):
     Returns:
         SensorEmulator: Initialized sensor emulator instance.
     """
-    manager = SensorEmulator('PidisSpeedyPodi')
-    # manager = SensorManager(sensor_names)
-    # manager.set_sample_rate(sample_rate)
+    # manager = SensorEmulator('PidisSpeedyPodi')
+    manager = SensorManager(sensor_names)
+    manager.set_sample_rate(sample_rate)
     manager.start()
     return manager
 
@@ -115,7 +115,7 @@ def main(input_queue = None):
     prev_len: int = 0
 
     while True:
-        global threshold
+        global threshold        # no global
         update_data(manager)
         vertical_acceleration = get_vertical_acceleration()
         peaks = find_peaks(vertical_acceleration, sample_rate)
