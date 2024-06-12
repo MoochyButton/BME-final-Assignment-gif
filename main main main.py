@@ -6,13 +6,7 @@ import scrollsOfDestiny
 
 
 def game_loop(input_queue):
-    game_main.main()
-
-    # if there is anything in the queue from the other thread
-    if not input_queue.empty():
-        # set the appropriate keys to True
-        # tells the game which keys are being pressed by the neural network
-        key_map = input_queue.get()
+    game_main.main(input_queue)
 
 
 def sensor_loop(output_queue):
