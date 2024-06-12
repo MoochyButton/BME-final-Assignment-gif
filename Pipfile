@@ -16,6 +16,7 @@ createbme = "*"
 scipy = "*"
 python-osc = "*"
 matplotlib = "*"
+pygame = "*"
 
 [dev-packages]
 
