@@ -56,7 +56,7 @@ class HUD:
         :return:
         """
 
-        for heart in self.hearts:
+        for _ in self.hearts:
             self.hearts.pop()
         self.hearts = [Heart(self.size, ((x * 6 * self.size) + self.position[0], self.position[1])) for x in range(self.max_value)]  # Initialize with max_value Heart objects
 

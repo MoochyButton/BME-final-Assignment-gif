@@ -1,8 +1,6 @@
 import pyglet
-from pyglet import shapes
-from pyglet.window import key
-from typing import Tuple, Any
-import math
+from typing import Tuple
+
 
 class Heart:
 
@@ -22,30 +20,3 @@ class Heart:
         self.position += position
         self.sprite.x += position[1]
         self.sprite.y += position[0]
-
-
-def main():
-    window = pyglet.window.Window(500, 500)
-    heart = Heart((200, 200))
-
-    @window.event
-    def on_draw():
-        window.clear()
-        heart.draw()
-
-    @window.event
-    def on_key_press(symbol: Any, modifiers: Any) -> None:
-        global enter_pressed
-        if symbol == key.LEFT:
-            heart.update((-10, 0))
-        if symbol == key.RIGHT:
-            heart.update((10, 0))
-        if symbol == key.UP:
-            heart.update((0, 10))
-        if symbol == key.DOWN:
-            heart.update((0, -10))
-
-    pyglet.app.run()
-
-if __name__ == "__main__":
-    main()

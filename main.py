@@ -1,7 +1,7 @@
 import pyglet
 from pyglet.window import key
 from typing import Any
-from Hearts import HUD
+from HUD import HUD
 
 def centre_animation(animation):
     for frame in animation.frames:
@@ -55,6 +55,10 @@ def on_key_press(symbol: Any, modifiers) -> None:
     elif symbol == key.ENTER:
         enter_pressed = True
         man.scale *= 1.5  # Increase scale when Enter is pressed
+    elif symbol == key.SPACE:
+        hud.take_damage()
+    elif symbol == key.BACKSPACE:
+        hud.reset()
 
 
 @window.event
