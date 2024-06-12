@@ -12,6 +12,10 @@ setuptools = "*"
 pygltflib = "*"
 numpy = "*"
 opencv-python = "*"
+createbme = "*"
+scipy = "*"
+python-osc = "*"
+matplotlib = "*"
 
 [dev-packages]
 
