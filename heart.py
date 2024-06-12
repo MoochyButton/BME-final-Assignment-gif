@@ -2,6 +2,7 @@ import pyglet
 from pyglet import shapes
 from pyglet.window import key
 from typing import Tuple, Any
+import math
 
 
 class Heart:
@@ -12,8 +13,9 @@ class Heart:
         self.position = position
         self.radius = 5
         self.side = 10
-        self.ear1 = shapes.Circle(self.position[0] + ( )/2, self.position[1] + 17.6, self.radius * size, 10)
-        self.ear2 = shapes.Circle(self.position[0] + 17.6, self.position[1] + 17.6, self.radius * size, 10)
+        thingy = (math.sqrt(self.side + self.side))
+        self.ear1 = shapes.Circle(self.position[0] + thingy*3, self.position[1] + thingy/2, self.radius * size, 10)
+        self.ear2 = shapes.Circle(self.position[0] + thingy/2, self.position[1] + thingy/2, self.radius * size, 10)
         self.body = shapes.Rectangle(self.position[0], self.position[1], self.side * size, self.side * size)
         self.body.rotation = 45
 
